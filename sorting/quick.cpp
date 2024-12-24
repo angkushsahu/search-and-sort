@@ -1,48 +1,49 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 
 void swap(int &a, int &b) {
-    int temp = a;
+    const int temp = a;
     a = b;
     b = temp;
 }
 
-int partition(vector<int> &arr, int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-    for (int j = low; j < high; j ++) {
+int partition(std::vector<int> &arr, const int start, const int end) {
+    const int pivot = arr[end];
+    int i = start - 1;
+    for (unsigned int j = start; j < end; j ++) {
         if (arr[j] < pivot) {
             i ++;
-            if (i != j) { swap(arr[j], arr[i]); }
+            if (i != j) swap(arr[j], arr[i]);
         }
     }
 
     i ++;
-    swap(arr[high], arr[i]);
+    swap(arr[end], arr[i]);
     return i;
 }
 
-void quick_sort(vector<int> &arr, int low, int high) {
-    if (low < high) {
-        int pivot = partition(arr, low, high);
-        quick_sort(arr, low, pivot - 1);
-        quick_sort(arr, pivot + 1, high);
+void quick_sort(std::vector<int> &arr, int start, int end) {
+    while (start < end) {
+        const int pivot = partition(arr, start, end);
+
+        if (pivot - start < end - pivot) {
+            quick_sort(arr, start, pivot - 1);
+            start = pivot + 1;
+        } else {
+            quick_sort(arr, pivot + 1, end);
+            end = pivot - 1;
+        }
     }
 }
 
-void display_array(vector<int> arr) {
-    for (int i : arr) { cout << i << " "; }
-    cout << endl;
-}
-
 int main() {
-    int size; cin >> size;
-    vector<int> arr(size);
-    for (int &i : arr) { cin >> i; }
+    unsigned int size; std::cin >> size;
+    std::vector<int> arr(size);
+    for (int &array_element : arr) std::cin >> array_element;
 
     quick_sort(arr, 0, size - 1);
-    display_array(arr);
+    for (const int &array_element : arr) std::cout << array_element << ' ';
+    std::cout << std::endl;
 
     return 0;
 }

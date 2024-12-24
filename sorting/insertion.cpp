@@ -1,18 +1,17 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 
 void swap(int &a, int &b) {
-    int temp = a;
+    const int temp = a;
     a = b;
     b = temp;
 }
 
-void insertion_sort(vector<int> &arr) {
-    int size = arr.size();
-    for (int i = 1; i < size; i ++) {
+void insertion_sort(std::vector<int> &arr, const unsigned int& size) {
+    for (unsigned int i = 1; i < size; i ++) {
         int i_value = arr[i];
         int j = i - 1;
+
         while (i_value < arr[j] && j >= 0) {
             arr[j + 1] = arr[j];
             j --;
@@ -21,18 +20,14 @@ void insertion_sort(vector<int> &arr) {
     }
 }
 
-void display_array(vector<int> arr) {
-    for (int i : arr) { cout << i << " "; }
-    cout << endl;
-}
-
 int main() {
-    int size; cin >> size;
-    vector<int> arr(size);
-    for (int &i : arr) { cin >> i; }
+    unsigned int size; std::cin >> size;
+    std::vector<int> arr(size);
+    for (int &array_element : arr) std::cin >> array_element;
 
-    insertion_sort(arr);
-    display_array(arr);
+    insertion_sort(arr, size);
+    for (const int &array_element : arr) std::cout << array_element << ' ';
+    std::cout << std::endl;
 
     return 0;
 }

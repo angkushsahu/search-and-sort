@@ -1,2 +1,7 @@
 /searching/*.exe
+/searching/.cph
+
 /sorting/*.exe
+/sorting/.cph
+
+.vscode

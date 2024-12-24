@@ -1,34 +1,31 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 
 void swap(int &a, int &b) {
-    int temp = a;
+    const int temp = a;
     a = b;
     b = temp;
 }
 
-void dnf_sort(vector<int> &arr) {
-    int low = 0, mid = 0, high = arr.size() - 1;
+void dnf_sort(std::vector<int> &arr, const unsigned int& size) {
+    unsigned int low = 0, mid = 0;
+    int high = size - 1;
+
     while (mid <= high) {
-        if (arr[mid] == 0) { swap(arr[mid ++], arr[low ++]); }
-        else if (arr[mid] == 1) { mid ++; }
-        else { swap(arr[mid], arr[high --]); }
+        if (arr[mid] == 0) swap(arr[mid ++], arr[low ++]);
+        else if (arr[mid] == 1) mid ++;
+        else swap(arr[mid], arr[high --]);
     }
 }
 
-void display_array(vector<int> arr) {
-    for (int i : arr) { cout << i << " "; }
-    cout << endl;
-}
-
 int main() {
-    int size; cin >> size;
-    vector<int> arr(size);
-    for (int &i : arr) { cin >> i; }
+    unsigned int size; std::cin >> size;
+    std::vector<int> arr(size);
+    for (int &array_element : arr) std::cin >> array_element;
 
-    dnf_sort(arr);
-    display_array(arr);
+    dnf_sort(arr, size);
+    for (const int &array_element : arr) std::cout << array_element << ' ';
+    std::cout << std::endl;
 
     return 0;
 }

@@ -1,39 +1,35 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 
 void swap(int &a, int &b) {
-    int temp = a;
+    const int temp = a;
     a = b;
     b = temp;
 }
 
-void bubble_sort(vector<int> &arr) {
-    int size = arr.size();
-    for (int i = 0; i < size - 1; i ++) {
-        int check_if_sorted = true;
-        for (int j = 0; j < size - i - 1; j ++) {
+void bubble_sort(std::vector<int> &arr, const unsigned int& size) {
+    for (unsigned int i = 0; i < size - 1; i ++) {
+        bool check_if_sorted = true;
+
+        for (unsigned int j = 0; j < size - i - 1; j ++) {
             if (arr[j] > arr[j + 1]) {
                 swap(arr[j], arr[j + 1]);
                 check_if_sorted = false;
             }
         }
-        if (check_if_sorted) { return; }
+
+        if (check_if_sorted) return;
     }
 }
 
-void display_array(vector<int> arr) {
-    for (int i : arr) { cout << i << " "; }
-    cout << endl;
-}
-
 int main() {
-    int size; cin >> size;
-    vector<int> arr(size);
-    for (int &i : arr) { cin >> i; }
+    unsigned int size; std::cin >> size;
+    std::vector<int> arr(size);
+    for (int &array_element : arr) std::cin >> array_element;
 
-    bubble_sort(arr);
-    display_array(arr);
+    bubble_sort(arr, size);
+    for (const int &array_element : arr) std::cout << array_element << ' ';
+    std::cout << std::endl;
 
     return 0;
 }
